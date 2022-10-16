@@ -10,7 +10,7 @@ class AuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_that_user_can_login_and_get_token()
+    public function test_that_user_who_can_login_and_get_token()
     {
         // when
         $csrfCookie = $this->get('/sanctum/csrf-cookie')->getCookie('XSRF-TOKEN');
@@ -23,8 +23,7 @@ class AuthTest extends TestCase
 
         $accessToken = json_decode($tokenResponse->getContent());
 
-        $profile = $this->withCookie($csrfCookie->getName(), $csrfCookie->getValue())
-        ->withHeader('Authorization', 'Bearer ' . $accessToken->token)->getJson('/api/user');
+        $profile = $this->withHeader('Authorization', 'Bearer ' . $accessToken->token)->getJson('/api/user');
 
         $userProfileEmail = $profile->getData()->email;
 
@@ -34,17 +33,17 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function test_that_user_not_exist()
+    public function test_that_user_who_not_exist()
     {
         $this->assertTrue(true);
     }
 
-    public function test_that_user_can_logout()
+    public function test_that_user_who_can_logout()
     {
         $this->assertTrue(true);
     }
 
-    public function test_that_user_is_not_autorized_to_logout()
+    public function test_that_user_who_is_not_autorized_to_logout()
     {
         $this->assertTrue(true);
     }
